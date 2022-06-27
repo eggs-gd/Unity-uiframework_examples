@@ -1,5 +1,6 @@
 {
   "name": "eggsgd.UiFramework.Examples",
+  "rootNamespace": "deVoid.UIFramework.Examples",
   "references": [
     "eggsgd.UiFramework",
     "Unity.TextMeshPro",

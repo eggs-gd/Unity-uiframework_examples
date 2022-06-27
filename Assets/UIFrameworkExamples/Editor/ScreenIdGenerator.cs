@@ -3,7 +3,7 @@ using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using eggsgd.UIFramework.Core;
+using eggsgd.UiFramework.Core;
 using UnityEditor;
 using UnityEngine;
 

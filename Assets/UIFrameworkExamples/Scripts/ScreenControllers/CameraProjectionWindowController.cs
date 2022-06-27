@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using eggsgd.UIFramework.Window;
+using eggsgd.UiFramework.Window;
 using UnityEngine;
 
 namespace deVoid.UIFramework.Examples

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using deVoid.Utils;
 using DG.Tweening;
-using eggsgd.UIFramework.Panel;
+using eggsgd.UiFramework.Panel;
 using UnityEngine;
 
 namespace deVoid.UIFramework.Examples

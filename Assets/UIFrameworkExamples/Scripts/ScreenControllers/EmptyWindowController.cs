@@ -1,4 +1,4 @@
-using eggsgd.UIFramework.Window;
+using eggsgd.UiFramework.Window;
 
 namespace deVoid.UIFramework.Examples
 {

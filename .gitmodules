@@ -1,0 +1,3 @@
+[submodule "Assets/Plugins/UiFramework"]
+	path = Assets/Plugins/UiFramework
+	url = ../Unity-uiframework.git

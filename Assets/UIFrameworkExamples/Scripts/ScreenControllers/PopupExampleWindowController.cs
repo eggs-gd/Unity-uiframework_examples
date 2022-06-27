@@ -1,5 +1,5 @@
 using deVoid.Utils;
-using eggsgd.UIFramework.Window;
+using eggsgd.UiFramework.Window;
 using UnityEngine;
 using UnityEngine.UI;
 

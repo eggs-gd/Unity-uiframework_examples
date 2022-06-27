@@ -1,5 +1,6 @@
 {
   "name": "eggsgd.UiFramework.Examples.Editor",
+  "rootNamespace": "deVoid.UIFramework",
   "references": [
     "eggsgd.UiFramework",
     "eggsgd.UiFramework.Editor"

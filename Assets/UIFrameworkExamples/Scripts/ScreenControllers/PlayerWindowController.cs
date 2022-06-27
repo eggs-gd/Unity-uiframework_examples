@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using deVoid.Utils;
-using eggsgd.UIFramework.Window;
+using eggsgd.UiFramework.Window;
 using UnityEngine;
 
 namespace deVoid.UIFramework.Examples
