@@ -1,4 +1,6 @@
-﻿namespace deVoid.UIFramework {
+﻿using eggsgd.UIFramework.Core;
+
+namespace eggsgd.UIFramework.Window {
     /// <summary>
     /// An entry for controlling window history and queue
     /// </summary>

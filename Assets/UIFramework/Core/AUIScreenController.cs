@@ -1,7 +1,10 @@
-﻿using UnityEngine;
-using System;
+﻿using System;
+using eggsgd.UIFramework.Panel;
+using eggsgd.UIFramework.ScreenTransitions;
+using eggsgd.UIFramework.Window;
+using UnityEngine;
 
-namespace deVoid.UIFramework
+namespace eggsgd.UIFramework.Core
 {
     /// <summary>
     /// Base implementation for UI Screens. You'll probably want to inherit

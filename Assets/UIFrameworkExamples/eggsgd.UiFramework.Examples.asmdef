@@ -1,0 +1,8 @@
+{
+  "name": "eggsgd.UiFramework.Examples",
+  "references": [
+    "eggsgd.UiFramework",
+    "Unity.TextMeshPro",
+    "DOTween.Modules"
+  ]
+}

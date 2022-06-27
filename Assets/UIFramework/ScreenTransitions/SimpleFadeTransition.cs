@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace deVoid.UIFramework
+namespace eggsgd.UIFramework.ScreenTransitions
 {
     /// <summary>
     /// This is a simple fade transition implemented as a built-in example.

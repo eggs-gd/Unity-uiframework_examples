@@ -1,4 +1,4 @@
-﻿namespace deVoid.UIFramework {
+﻿namespace eggsgd.UIFramework.Window {
     /// <summary>
     /// Enum to define behaviour of Windows
     /// upon opening, in the history and queue

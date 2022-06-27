@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using eggsgd.UIFramework.Core;
 using UnityEngine;
 
-namespace deVoid.UIFramework
+namespace eggsgd.UIFramework.Window
 {
     /// <summary>
     /// This layer controls all Windows.

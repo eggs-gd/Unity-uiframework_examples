@@ -1,0 +1,10 @@
+{
+  "name": "eggsgd.UiFramework.Editor",
+  "rootNamespace": "eggsgd",
+  "references": [
+    "eggsgd.UiFramework"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ]
+}

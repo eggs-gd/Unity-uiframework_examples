@@ -1,4 +1,6 @@
-﻿namespace deVoid.UIFramework {
+﻿using eggsgd.UIFramework.Core;
+
+namespace eggsgd.UIFramework.Panel {
     /// <summary>
     /// Base class for panels that need no special Properties
     /// </summary>

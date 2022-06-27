@@ -1,8 +1,7 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+﻿using eggsgd.UIFramework.Core;
+using UnityEngine;
 
-namespace deVoid.UIFramework {
+namespace eggsgd.UIFramework.Panel {
     /// <summary>
     /// This Layer controls Panels.
     /// Panels are Screens that have no history or queuing,

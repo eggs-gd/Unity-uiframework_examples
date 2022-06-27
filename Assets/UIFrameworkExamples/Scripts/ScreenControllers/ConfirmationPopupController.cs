@@ -1,5 +1,6 @@
 ﻿using System;
 using deVoid.Utils;
+using eggsgd.UIFramework.Window;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

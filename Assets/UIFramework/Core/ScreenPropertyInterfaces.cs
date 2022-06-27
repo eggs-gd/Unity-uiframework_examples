@@ -1,4 +1,7 @@
-﻿namespace deVoid.UIFramework
+﻿using eggsgd.UIFramework.Panel;
+using eggsgd.UIFramework.Window;
+
+namespace eggsgd.UIFramework.Core
 {
     /// <summary>
     /// Base interface for all the screen properties

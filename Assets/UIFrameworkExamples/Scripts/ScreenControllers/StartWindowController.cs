@@ -1,4 +1,5 @@
 ﻿using deVoid.Utils;
+using eggsgd.UIFramework.Window;
 
 namespace deVoid.UIFramework.Examples
 {

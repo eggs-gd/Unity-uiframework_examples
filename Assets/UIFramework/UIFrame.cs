@@ -1,8 +1,11 @@
 ﻿using System;
+using eggsgd.UIFramework.Core;
+using eggsgd.UIFramework.Panel;
+using eggsgd.UIFramework.Window;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace deVoid.UIFramework
+namespace eggsgd.UIFramework
 {
     /// <summary>
     /// This is the centralized access point for all things UI.

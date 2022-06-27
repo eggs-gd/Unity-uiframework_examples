@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using deVoid.UIFramework;
 using deVoid.UIFramework.Examples;
 using deVoid.Utils;
+using eggsgd.UIFramework.Panel;
 using UnityEngine;
 
 [Serializable] 

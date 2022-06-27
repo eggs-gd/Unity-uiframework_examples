@@ -1,4 +1,6 @@
-﻿namespace deVoid.UIFramework
+﻿using eggsgd.UIFramework.Core;
+
+namespace eggsgd.UIFramework.Window
 {
     /// <summary>
     /// Base implementation for Window ScreenControllers that need no special Properties

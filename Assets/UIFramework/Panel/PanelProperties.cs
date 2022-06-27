@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using eggsgd.UIFramework.Core;
+using UnityEngine;
 
-namespace deVoid.UIFramework {
+namespace eggsgd.UIFramework.Panel {
     /// <summary>
     /// Properties common to all panels
     /// </summary>

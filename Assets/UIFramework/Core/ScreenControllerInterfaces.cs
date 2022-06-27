@@ -1,6 +1,8 @@
 ﻿using System;
+using eggsgd.UIFramework.Panel;
+using eggsgd.UIFramework.Window;
 
-namespace deVoid.UIFramework {
+namespace eggsgd.UIFramework.Core {
     /// <summary>
     /// Interface that all UI Screens must implement directly or indirectly
     /// </summary>

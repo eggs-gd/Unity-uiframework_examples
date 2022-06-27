@@ -1,5 +1,6 @@
 ﻿using System;
 using DG.Tweening;
+using eggsgd.UIFramework.ScreenTransitions;
 using UnityEngine;
 
 namespace deVoid.UIFramework.Examples

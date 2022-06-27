@@ -1,12 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
+using eggsgd.UIFramework.Panel;
+using eggsgd.UIFramework.Window;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace deVoid.UIFramework.Editor
+namespace eggsgd.UIFramework.Editor
 {
     public static class UIFrameworkTools
     {
