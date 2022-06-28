@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace eggsgd.UiFramework.Examples {
+namespace eggsgd.UiFramework {
     
     
     public sealed class ScreenIds {
