@@ -27,11 +27,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using UnityEngine;
 
-namespace deVoid.Utils
+namespace eggsgd.UiFramework.Examples.Utils
 {
     /// <summary>
-    /// Base interface for Signals
+    ///     Base interface for Signals
     /// </summary>
     public interface ISignal
     {
@@ -39,96 +41,105 @@ namespace deVoid.Utils
     }
 
     /// <summary>
-    /// Signals main facade class for global, game-wide signals
+    ///     Signals main facade class for global, game-wide signals
     /// </summary>
     public static class Signals
     {
-        private static readonly SignalHub hub = new SignalHub();
+        private static readonly SignalHub hub = new();
 
-        public static SType Get<SType>() where SType : ISignal, new() {
-            return hub.Get<SType>();
-        }
+        public static SType Get<SType>() where SType : ISignal, new() => hub.Get<SType>();
 
-        public static void AddListenerToHash(string signalHash, Action handler) {
+        public static void AddListenerToHash(string signalHash, Action handler)
+        {
             hub.AddListenerToHash(signalHash, handler);
         }
 
-        public static void RemoveListenerFromHash(string signalHash, Action handler) {
+        public static void RemoveListenerFromHash(string signalHash, Action handler)
+        {
             hub.RemoveListenerFromHash(signalHash, handler);
         }
     }
 
     /// <summary>
-    /// A hub for Signals you can implement in your classes
+    ///     A hub for Signals you can implement in your classes
     /// </summary>
     public class SignalHub
     {
-        private Dictionary<Type, ISignal> signals = new Dictionary<Type, ISignal>();
+        private readonly Dictionary<Type, ISignal> signals = new();
 
         /// <summary>
-        /// Getter for a signal of a given type
+        ///     Getter for a signal of a given type
         /// </summary>
         /// <typeparam name="SType">Type of signal</typeparam>
         /// <returns>The proper signal binding</returns>
-        public SType Get<SType>() where SType : ISignal, new() {
-            Type signalType = typeof(SType);
+        public SType Get<SType>() where SType : ISignal, new()
+        {
+            var signalType = typeof(SType);
             ISignal signal;
 
-            if (signals.TryGetValue(signalType, out signal)) {
-                return (SType) signal;
+            if (signals.TryGetValue(signalType, out signal))
+            {
+                return (SType)signal;
             }
 
-            return (SType) Bind(signalType);
+            return (SType)Bind(signalType);
         }
 
         /// <summary>
-        /// Manually provide a SignalHash and bind it to a given listener
-        /// (you most likely want to use an AddListener, unless you know exactly
-        /// what you are doing)
+        ///     Manually provide a SignalHash and bind it to a given listener
+        ///     (you most likely want to use an AddListener, unless you know exactly
+        ///     what you are doing)
         /// </summary>
         /// <param name="signalHash">Unique hash for signal</param>
         /// <param name="handler">Callback for signal listener</param>
-        public void AddListenerToHash(string signalHash, Action handler) {
-            ISignal signal = GetSignalByHash(signalHash);
-            if (signal != null && signal is ASignal) {
+        public void AddListenerToHash(string signalHash, Action handler)
+        {
+            var signal = GetSignalByHash(signalHash);
+            if (signal != null && signal is ASignal)
+            {
                 (signal as ASignal).AddListener(handler);
             }
         }
 
         /// <summary>
-        /// Manually provide a SignalHash and unbind it from a given listener
-        /// (you most likely want to use a RemoveListener, unless you know exactly
-        /// what you are doing)
+        ///     Manually provide a SignalHash and unbind it from a given listener
+        ///     (you most likely want to use a RemoveListener, unless you know exactly
+        ///     what you are doing)
         /// </summary>
         /// <param name="signalHash">Unique hash for signal</param>
         /// <param name="handler">Callback for signal listener</param>
-        public void RemoveListenerFromHash(string signalHash, Action handler) {
-            ISignal signal = GetSignalByHash(signalHash);
-            if (signal != null && signal is ASignal) {
+        public void RemoveListenerFromHash(string signalHash, Action handler)
+        {
+            var signal = GetSignalByHash(signalHash);
+            if (signal != null && signal is ASignal)
+            {
                 (signal as ASignal).RemoveListener(handler);
             }
         }
 
-        private ISignal Bind(Type signalType) {
+        private ISignal Bind(Type signalType)
+        {
             ISignal signal;
-            if (signals.TryGetValue(signalType, out signal)) {
-                UnityEngine.Debug.LogError(string.Format("Signal already registered for type {0}",
+            if (signals.TryGetValue(signalType, out signal))
+            {
+                Debug.LogError(string.Format("Signal already registered for type {0}",
                     signalType.ToString()));
                 return signal;
             }
 
-            signal = (ISignal) Activator.CreateInstance(signalType);
+            signal = (ISignal)Activator.CreateInstance(signalType);
             signals.Add(signalType, signal);
             return signal;
         }
 
-        private ISignal Bind<T>() where T : ISignal, new() {
-            return Bind(typeof(T));
-        }
+        private ISignal Bind<T>() where T : ISignal, new() => Bind(typeof(T));
 
-        private ISignal GetSignalByHash(string signalHash) {
-            foreach (ISignal signal in signals.Values) {
-                if (signal.Hash == signalHash) {
+        private ISignal GetSignalByHash(string signalHash)
+        {
+            foreach (var signal in signals.Values)
+            {
+                if (signal.Hash == signalHash)
+                {
                     return signal;
                 }
             }
@@ -138,19 +149,22 @@ namespace deVoid.Utils
     }
 
     /// <summary>
-    /// Abstract class for Signals, provides hash by type functionality
+    ///     Abstract class for Signals, provides hash by type functionality
     /// </summary>
     public abstract class ABaseSignal : ISignal
     {
         protected string _hash;
 
         /// <summary>
-        /// Unique id for this signal
+        ///     Unique id for this signal
         /// </summary>
-        public string Hash {
-            get {
-                if (string.IsNullOrEmpty(_hash)) {
-                    _hash = this.GetType().ToString();
+        public string Hash
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_hash))
+                {
+                    _hash = GetType().ToString();
                 }
 
                 return _hash;
@@ -159,46 +173,50 @@ namespace deVoid.Utils
     }
 
     /// <summary>
-    /// Strongly typed messages with no parameters
+    ///     Strongly typed messages with no parameters
     /// </summary>
     public abstract class ASignal : ABaseSignal
     {
         private Action callback;
 
         /// <summary>
-        /// Adds a listener to this Signal
+        ///     Adds a listener to this Signal
         /// </summary>
         /// <param name="handler">Method to be called when signal is fired</param>
-        public void AddListener(Action handler) {
+        public void AddListener(Action handler)
+        {
 #if UNITY_EDITOR
-            UnityEngine.Debug.Assert(
-                handler.Method.GetCustomAttributes(typeof(System.Runtime.CompilerServices.CompilerGeneratedAttribute),
-                    inherit: false).Length == 0,
+            Debug.Assert(
+                handler.Method.GetCustomAttributes(typeof(CompilerGeneratedAttribute),
+                    false).Length == 0,
                 "Adding anonymous delegates as Signal callbacks is not supported (you wouldn't be able to unregister them later).");
 #endif
             callback += handler;
         }
 
         /// <summary>
-        /// Removes a listener from this Signal
+        ///     Removes a listener from this Signal
         /// </summary>
         /// <param name="handler">Method to be unregistered from signal</param>
-        public void RemoveListener(Action handler) {
+        public void RemoveListener(Action handler)
+        {
             callback -= handler;
         }
 
         /// <summary>
-        /// Dispatch this signal
+        ///     Dispatch this signal
         /// </summary>
-        public void Dispatch() {
-            if (callback != null) {
+        public void Dispatch()
+        {
+            if (callback != null)
+            {
                 callback();
             }
         }
     }
 
     /// <summary>
-    /// Strongly typed messages with 1 parameter
+    ///     Strongly typed messages with 1 parameter
     /// </summary>
     /// <typeparam name="T">Parameter type</typeparam>
     public abstract class ASignal<T> : ABaseSignal
@@ -206,39 +224,43 @@ namespace deVoid.Utils
         private Action<T> callback;
 
         /// <summary>
-        /// Adds a listener to this Signal
+        ///     Adds a listener to this Signal
         /// </summary>
         /// <param name="handler">Method to be called when signal is fired</param>
-        public void AddListener(Action<T> handler) {
+        public void AddListener(Action<T> handler)
+        {
 #if UNITY_EDITOR
-            UnityEngine.Debug.Assert(
-                handler.Method.GetCustomAttributes(typeof(System.Runtime.CompilerServices.CompilerGeneratedAttribute),
-                    inherit: false).Length == 0,
+            Debug.Assert(
+                handler.Method.GetCustomAttributes(typeof(CompilerGeneratedAttribute),
+                    false).Length == 0,
                 "Adding anonymous delegates as Signal callbacks is not supported (you wouldn't be able to unregister them later).");
 #endif
             callback += handler;
         }
 
         /// <summary>
-        /// Removes a listener from this Signal
+        ///     Removes a listener from this Signal
         /// </summary>
         /// <param name="handler">Method to be unregistered from signal</param>
-        public void RemoveListener(Action<T> handler) {
+        public void RemoveListener(Action<T> handler)
+        {
             callback -= handler;
         }
 
         /// <summary>
-        /// Dispatch this signal with 1 parameter
+        ///     Dispatch this signal with 1 parameter
         /// </summary>
-        public void Dispatch(T arg1) {
-            if (callback != null) {
+        public void Dispatch(T arg1)
+        {
+            if (callback != null)
+            {
                 callback(arg1);
             }
         }
     }
 
     /// <summary>
-    /// Strongly typed messages with 2 parameters
+    ///     Strongly typed messages with 2 parameters
     /// </summary>
     /// <typeparam name="T">First parameter type</typeparam>
     /// <typeparam name="U">Second parameter type</typeparam>
@@ -247,39 +269,43 @@ namespace deVoid.Utils
         private Action<T, U> callback;
 
         /// <summary>
-        /// Adds a listener to this Signal
+        ///     Adds a listener to this Signal
         /// </summary>
         /// <param name="handler">Method to be called when signal is fired</param>
-        public void AddListener(Action<T, U> handler) {
+        public void AddListener(Action<T, U> handler)
+        {
 #if UNITY_EDITOR
-            UnityEngine.Debug.Assert(
-                handler.Method.GetCustomAttributes(typeof(System.Runtime.CompilerServices.CompilerGeneratedAttribute),
-                    inherit: false).Length == 0,
+            Debug.Assert(
+                handler.Method.GetCustomAttributes(typeof(CompilerGeneratedAttribute),
+                    false).Length == 0,
                 "Adding anonymous delegates as Signal callbacks is not supported (you wouldn't be able to unregister them later).");
 #endif
             callback += handler;
         }
 
         /// <summary>
-        /// Removes a listener from this Signal
+        ///     Removes a listener from this Signal
         /// </summary>
         /// <param name="handler">Method to be unregistered from signal</param>
-        public void RemoveListener(Action<T, U> handler) {
+        public void RemoveListener(Action<T, U> handler)
+        {
             callback -= handler;
         }
 
         /// <summary>
-        /// Dispatch this signal
+        ///     Dispatch this signal
         /// </summary>
-        public void Dispatch(T arg1, U arg2) {
-            if (callback != null) {
+        public void Dispatch(T arg1, U arg2)
+        {
+            if (callback != null)
+            {
                 callback(arg1, arg2);
             }
         }
     }
 
     /// <summary>
-    /// Strongly typed messages with 3 parameter
+    ///     Strongly typed messages with 3 parameter
     /// </summary>
     /// <typeparam name="T">First parameter type</typeparam>
     /// <typeparam name="U">Second parameter type</typeparam>
@@ -289,32 +315,36 @@ namespace deVoid.Utils
         private Action<T, U, V> callback;
 
         /// <summary>
-        /// Adds a listener to this Signal
+        ///     Adds a listener to this Signal
         /// </summary>
         /// <param name="handler">Method to be called when signal is fired</param>
-        public void AddListener(Action<T, U, V> handler) {
+        public void AddListener(Action<T, U, V> handler)
+        {
 #if UNITY_EDITOR
-            UnityEngine.Debug.Assert(
-                handler.Method.GetCustomAttributes(typeof(System.Runtime.CompilerServices.CompilerGeneratedAttribute),
-                    inherit: false).Length == 0,
+            Debug.Assert(
+                handler.Method.GetCustomAttributes(typeof(CompilerGeneratedAttribute),
+                    false).Length == 0,
                 "Adding anonymous delegates as Signal callbacks is not supported (you wouldn't be able to unregister them later).");
 #endif
             callback += handler;
         }
 
         /// <summary>
-        /// Removes a listener from this Signal
+        ///     Removes a listener from this Signal
         /// </summary>
         /// <param name="handler">Method to be unregistered from signal</param>
-        public void RemoveListener(Action<T, U, V> handler) {
+        public void RemoveListener(Action<T, U, V> handler)
+        {
             callback -= handler;
         }
 
         /// <summary>
-        /// Dispatch this signal
+        ///     Dispatch this signal
         /// </summary>
-        public void Dispatch(T arg1, U arg2, V arg3) {
-            if (callback != null) {
+        public void Dispatch(T arg1, U arg2, V arg3)
+        {
+            if (callback != null)
+            {
                 callback(arg1, arg2, arg3);
             }
         }

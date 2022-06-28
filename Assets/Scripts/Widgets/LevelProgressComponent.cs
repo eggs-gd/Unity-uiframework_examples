@@ -1,25 +1,30 @@
+using eggsgd.UiFramework.Examples.Extras;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace deVoid.UIFramework.Examples
+namespace eggsgd.UiFramework.Examples.Widgets
 {
     public class LevelProgressComponent : MonoBehaviour
     {
-        [SerializeField] private TextMeshProUGUI levelCounter = null;
-        [SerializeField] private TextMeshProUGUI levelName = null;
-        [SerializeField] private Image[] stars = null;
+        [SerializeField] private TextMeshProUGUI levelCounter;
+        [SerializeField] private TextMeshProUGUI levelName;
+        [SerializeField] private Image[] stars;
         [SerializeField] private Color starOn = Color.yellow;
         [SerializeField] private Color starOff = Color.black;
-        
-        public void SetData(PlayerDataEntry entry, int levelNumber) {
+
+        public void SetData(PlayerDataEntry entry, int levelNumber)
+        {
             levelCounter.text = "Level " + (levelNumber + 1);
             levelName.text = entry.LevelName;
-            for (int i = 0; i < stars.Length; i++) {
-                if (i + 1 <= entry.Stars) {
+            for (var i = 0; i < stars.Length; i++)
+            {
+                if (i + 1 <= entry.Stars)
+                {
                     stars[i].color = starOn;
                 }
-                else {
+                else
+                {
                     stars[i].color = starOff;
                 }
             }

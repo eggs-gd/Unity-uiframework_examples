@@ -3,7 +3,7 @@ using DG.Tweening;
 using eggsgd.UiFramework.ScreenTransitions;
 using UnityEngine;
 
-namespace deVoid.UIFramework.Examples
+namespace eggsgd.UiFramework.Examples.ScreenTransitions
 {
     public class SlideScreenTransition : ATransitionComponent
     {
@@ -23,17 +23,20 @@ namespace deVoid.UIFramework.Examples
         [SerializeField] protected float fadeDurationPercent = 0.5f;
         [SerializeField] protected Ease ease = Ease.Linear;
 
-        public Position Origin {
-            get { return origin; }
-            set { origin = value; }
+        public Position Origin
+        {
+            get => origin;
+            set => origin = value;
         }
 
-        public override void Animate(Transform target, Action callWhenFinished) {
-            RectTransform rTransform = target as RectTransform;
+        public override void Animate(Transform target, Action callWhenFinished)
+        {
+            var rTransform = target as RectTransform;
             var origAnchoredPos = rTransform.anchoredPosition;
-            Vector3 startPosition = Vector3.zero;
+            var startPosition = Vector3.zero;
 
-            switch (origin) {
+            switch (origin)
+            {
                 case Position.Left:
                     startPosition = new Vector3(-rTransform.rect.width, 0.0f, 0.0f);
                     break;
@@ -53,9 +56,11 @@ namespace deVoid.UIFramework.Examples
             rTransform.DOKill();
 
             CanvasGroup canvasGroup = null;
-            if (doFade) {
+            if (doFade)
+            {
                 canvasGroup = rTransform.GetComponent<CanvasGroup>();
-                if (canvasGroup == null) {
+                if (canvasGroup == null)
+                {
                     canvasGroup = rTransform.gameObject.AddComponent<CanvasGroup>();
                 }
 
@@ -63,14 +68,16 @@ namespace deVoid.UIFramework.Examples
             }
 
             rTransform.DOAnchorPos(isOutAnimation ? startPosition : Vector3.zero, duration, true)
-                .SetEase(ease).OnComplete(
-                    () => {
-                        callWhenFinished();
-                        rTransform.anchoredPosition = origAnchoredPos;
-                        if (canvasGroup != null) {
-                            canvasGroup.alpha = 1f;
-                        }
-                    }).SetUpdate(true);
+                      .SetEase(ease).OnComplete(
+                           () =>
+                           {
+                               callWhenFinished();
+                               rTransform.anchoredPosition = origAnchoredPos;
+                               if (canvasGroup != null)
+                               {
+                                   canvasGroup.alpha = 1f;
+                               }
+                           }).SetUpdate(true);
         }
     }
 }

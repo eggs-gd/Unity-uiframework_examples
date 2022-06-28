@@ -1,45 +1,49 @@
-using deVoid.Utils;
+using eggsgd.UiFramework.Examples.Utils;
 using eggsgd.UiFramework.Window;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace deVoid.UIFramework.Examples
+namespace eggsgd.UiFramework.Examples.ScreenControllers
 {
     public class PopupExampleWindowController : AWindowController
     {
-        [SerializeField] 
-        private Image exampleImage = null;
-        
+        [SerializeField]
+        private Image exampleImage;
+
         private int currentPopupExample;
         private Color originalColor;
 
         /// <summary>
-        /// You can use all of Unity's regular functions, as Screens
-        /// are all MonoBehaviours, but don't forget that many of them
-        /// have important operations being called in their base methods
+        ///     You can use all of Unity's regular functions, as Screens
+        ///     are all MonoBehaviours, but don't forget that many of them
+        ///     have important operations being called in their base methods
         /// </summary>
-        protected override void Awake() {
+        protected override void Awake()
+        {
             base.Awake();
             originalColor = exampleImage.color;
         }
 
-        public void UI_ShowPopup() {
+        public void UI_ShowPopup()
+        {
             Signals.Get<ShowConfirmationPopupSignal>().Dispatch(GetPopupData());
         }
 
-        private ConfirmationPopupProperties GetPopupData() {
+        private ConfirmationPopupProperties GetPopupData()
+        {
             ConfirmationPopupProperties testProps = null;
-            
-            switch (currentPopupExample) {
+
+            switch (currentPopupExample)
+            {
                 case 0:
-                    testProps = new ConfirmationPopupProperties("Uh-oh!", 
+                    testProps = new ConfirmationPopupProperties("Uh-oh!",
                         "You were curious and clicked the button! Try a few more times.",
                         "Got it!");
                     break;
                 case 1:
-                    testProps = new ConfirmationPopupProperties("Question:", 
+                    testProps = new ConfirmationPopupProperties("Question:",
                         "What is your favourite color?",
-                        "Blue", OnBlueSelected, 
+                        "Blue", OnBlueSelected,
                         "Red", OnRedSelected);
                     break;
                 case 2:
@@ -48,28 +52,32 @@ namespace deVoid.UIFramework.Examples
                         "Fine.", OnRevertColors);
                     break;
                 case 3:
-                    testProps = new ConfirmationPopupProperties("YOU DIED", 
+                    testProps = new ConfirmationPopupProperties("YOU DIED",
                         "The Dark Souls of Pop-Ups", "Respawn");
                     break;
             }
 
             currentPopupExample++;
-            if (currentPopupExample > 3) {
+            if (currentPopupExample > 3)
+            {
                 currentPopupExample = 0;
             }
 
             return testProps;
         }
 
-        private void OnRevertColors() {
+        private void OnRevertColors()
+        {
             exampleImage.color = originalColor;
         }
 
-        private void OnRedSelected() {
+        private void OnRedSelected()
+        {
             exampleImage.color = Color.red;
         }
 
-        private void OnBlueSelected() {
+        private void OnBlueSelected()
+        {
             exampleImage.color = Color.blue;
         }
     }

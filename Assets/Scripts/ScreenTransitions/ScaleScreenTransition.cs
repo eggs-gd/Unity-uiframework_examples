@@ -3,7 +3,7 @@ using DG.Tweening;
 using eggsgd.UiFramework.ScreenTransitions;
 using UnityEngine;
 
-namespace deVoid.UIFramework.Examples
+namespace eggsgd.UiFramework.Examples.ScreenTransitions
 {
     public class ScaleScreenTransition : ATransitionComponent
     {
@@ -12,15 +12,19 @@ namespace deVoid.UIFramework.Examples
         [SerializeField] protected bool doFade;
         [SerializeField] protected float fadeDurationPercent = 0.5f;
         [SerializeField] protected Ease ease = Ease.Linear;
-        [SerializeField] [Range(0f, 1f)] 
+
+        [SerializeField] [Range(0f, 1f)]
         protected float xYSplit = 0.25f;
 
-        public override void Animate(Transform target, Action callWhenFinished) {
-            RectTransform rTransform = target as RectTransform;
+        public override void Animate(Transform target, Action callWhenFinished)
+        {
+            var rTransform = target as RectTransform;
             CanvasGroup canvasGroup = null;
-            if (doFade) {
+            if (doFade)
+            {
                 canvasGroup = rTransform.GetComponent<CanvasGroup>();
-                if (canvasGroup == null) {
+                if (canvasGroup == null)
+                {
                     canvasGroup = rTransform.gameObject.AddComponent<CanvasGroup>();
                 }
 
@@ -28,13 +32,15 @@ namespace deVoid.UIFramework.Examples
             }
 
             rTransform.DOKill();
-            if (isOutAnimation) {
+            if (isOutAnimation)
+            {
                 rTransform.DOScale(0f, duration).SetEase(ease)
-                    .OnComplete(() => Cleanup(callWhenFinished, rTransform, canvasGroup))
-                    .SetUpdate(true);
+                          .OnComplete(() => Cleanup(callWhenFinished, rTransform, canvasGroup))
+                          .SetUpdate(true);
             }
-            else {
-                Sequence scaleSequence = DOTween.Sequence();
+            else
+            {
+                var scaleSequence = DOTween.Sequence();
                 scaleSequence.SetUpdate(true);
                 rTransform.localScale = new Vector3(0f, 0.02f, 0f);
 
@@ -48,10 +54,12 @@ namespace deVoid.UIFramework.Examples
             }
         }
 
-        private void Cleanup(Action callWhenFinished, RectTransform rTransform, CanvasGroup canvasGroup) {
+        private void Cleanup(Action callWhenFinished, RectTransform rTransform, CanvasGroup canvasGroup)
+        {
             callWhenFinished();
             rTransform.localScale = Vector3.one;
-            if (canvasGroup != null) {
+            if (canvasGroup != null)
+            {
                 canvasGroup.alpha = 1f;
             }
         }
