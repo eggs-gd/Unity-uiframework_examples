@@ -2,9 +2,9 @@
 /shelf/
 /workspace.xml
 # Rider ignored files
+/.idea.Unity-uiframework-Examples.iml
 /modules.xml
 /contentModel.xml
-/.idea.Unity-uiframework_examples.iml
 /projectSettingsUpdater.xml
 # Editor-based HTTP Client requests
 /httpRequests/

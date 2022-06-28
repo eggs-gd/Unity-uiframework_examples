@@ -1,4 +1,4 @@
 
-	[submodule "Packages/eggsgd.uiframework"]
-		path = Packages/eggsgd.uiframework
-		url = git@github.com:eggs-gd/Unity-uiframework.git
+[submodule "Packages/Unity-uiframework"]
+	path = Packages/Unity-uiframework
+	url = git@github.com:eggs-gd/Unity-uiframework.git
