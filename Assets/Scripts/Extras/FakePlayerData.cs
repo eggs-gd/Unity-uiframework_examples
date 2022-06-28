@@ -18,7 +18,7 @@ namespace eggsgd.UiFramework.Examples.Extras
         public int Stars;
     }
 
-    [CreateAssetMenu(fileName = "PlayerData", menuName = "eGGs.gd/UI Example/Fake Player Data")]
+    [CreateAssetMenu(fileName = "PlayerData", menuName = "eGGs.gd UI/Examples/Fake Player Data")]
     public class FakePlayerData : ScriptableObject
     {
         [SerializeField]
