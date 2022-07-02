@@ -3,6 +3,7 @@
   "rootNamespace": "eggsgd.UiFramework.Examples",
   "references": [
     "eggsgd.UiFramework",
+    "eggsgd.Signals",
     "Unity.TextMeshPro",
     "DOTween.Modules"
   ]

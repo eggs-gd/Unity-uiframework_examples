@@ -19,20 +19,20 @@ namespace eggsgd.UiFramework.Examples.Widgets
         [SerializeField] private bool rotateWhenClamped = true;
         [SerializeField] private RectTransform rotatingElement;
 
-        private Transform currentFollow;
-        private RectTransform mainCanvasRectTransform;
-        private CanvasScaler parentScaler;
-        private RectTransform rectTransform;
+        private Transform _currentFollow;
+        private RectTransform _mainCanvasRectTransform;
+        private CanvasScaler _parentScaler;
+        private RectTransform _rectTransform;
 
         private void Start()
         {
-            mainCanvasRectTransform = transform.root as RectTransform;
-            rectTransform = transform as RectTransform;
-            parentScaler = mainCanvasRectTransform.GetComponent<CanvasScaler>();
+            _mainCanvasRectTransform = transform.root as RectTransform;
+            _rectTransform = transform as RectTransform;
+            _parentScaler = _mainCanvasRectTransform.GetComponent<CanvasScaler>();
 
             if (rotatingElement == null)
             {
-                rotatingElement = rectTransform;
+                rotatingElement = _rectTransform;
             }
         }
 
@@ -83,7 +83,7 @@ namespace eggsgd.UiFramework.Examples.Widgets
 
         public void SetFollow(Transform toFollow)
         {
-            currentFollow = toFollow;
+            _currentFollow = toFollow;
         }
 
         public void SetText(string label)
@@ -101,42 +101,44 @@ namespace eggsgd.UiFramework.Examples.Widgets
         /// </summary>
         protected void PositionAtOrigin()
         {
-            var mainSize = mainCanvasRectTransform.sizeDelta;
-            var labelSize = rectTransform.rect.size;
-            rectTransform.anchoredPosition = new Vector2((mainSize.x - labelSize.x) / 2f, mainSize.y / 2f);
+            var mainSize = _mainCanvasRectTransform.sizeDelta;
+            var labelSize = _rectTransform.rect.size;
+            _rectTransform.anchoredPosition = new Vector2((mainSize.x - labelSize.x) * 0.5f, mainSize.y * 0.5f);
         }
 
         public void UpdatePosition(Camera cam)
         {
-            if (currentFollow != null)
+            if (_currentFollow == null)
             {
-                var onScreenPosition =
-                    GetAnchoredPosition(cam, currentFollow.transform, parentScaler, rectTransform.rect);
-                if (!clampAtBorders)
-                {
-                    rectTransform.anchoredPosition = onScreenPosition;
-                    return;
-                }
+                return;
+            }
 
-                var clampedPosition =
-                    GetClampedOnScreenPosition(onScreenPosition, rectTransform.rect, mainCanvasRectTransform);
-                rectTransform.anchoredPosition = clampedPosition;
+            var onScreenPosition =
+                GetAnchoredPosition(cam, _currentFollow.transform, _parentScaler, _rectTransform.rect);
+            if (!clampAtBorders)
+            {
+                _rectTransform.anchoredPosition = onScreenPosition;
+                return;
+            }
 
-                if (!rotateWhenClamped)
-                {
-                    return;
-                }
+            var clampedPosition =
+                GetClampedOnScreenPosition(onScreenPosition, _rectTransform.rect, _mainCanvasRectTransform);
+            _rectTransform.anchoredPosition = clampedPosition;
 
-                if (onScreenPosition != clampedPosition)
-                {
-                    var delta = clampedPosition - onScreenPosition;
-                    var angle = Mathf.Atan2(delta.y, delta.x) * Mathf.Rad2Deg;
-                    rotatingElement.localRotation = Quaternion.AngleAxis(angle - 90f, Vector3.forward);
-                }
-                else
-                {
-                    rotatingElement.localRotation = Quaternion.identity;
-                }
+            if (!rotateWhenClamped)
+            {
+                return;
+            }
+
+            if (onScreenPosition != clampedPosition)
+            {
+                var delta = clampedPosition - onScreenPosition;
+                var angle = Mathf.Atan2(delta.y, delta.x) * Mathf.Rad2Deg;
+                rotatingElement.localRotation = Quaternion.AngleAxis(angle - 90f, Vector3.forward);
+            }
+            else
+            {
+                rotatingElement.localRotation = Quaternion.identity;
             }
         }
     }

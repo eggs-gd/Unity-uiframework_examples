@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using eggsgd.UiFramework.Examples.Utils;
+using eggsgd.Signals;
 using eggsgd.UiFramework.Examples.Widgets;
 using eggsgd.UiFramework.Panel;
 using UnityEngine;
@@ -33,18 +33,18 @@ namespace eggsgd.UiFramework.Examples.ScreenControllers
         [SerializeField]
         private NavigationPanelButton templateButton;
 
-        private readonly List<NavigationPanelButton> currentButtons = new();
+        private readonly List<NavigationPanelButton> _currentButtons = new();
 
         // I usually always place AddListeners and RemoveListeners together
         // to reduce the chances of adding a listener and not removing it.
         protected override void AddListeners()
         {
-            Signals.Get<NavigateToWindowSignal>().AddListener(OnExternalNavigation);
+            Signals.SignalBus.Get<NavigateToWindowSignal>().AddListener(OnExternalNavigation);
         }
 
         protected override void RemoveListeners()
         {
-            Signals.Get<NavigateToWindowSignal>().RemoveListener(OnExternalNavigation);
+            Signals.SignalBus.Get<NavigateToWindowSignal>().RemoveListener(OnExternalNavigation);
         }
 
         /// <summary>
@@ -67,17 +67,17 @@ namespace eggsgd.UiFramework.Examples.ScreenControllers
                 newBtn.SetData(target);
                 newBtn.gameObject.SetActive(true);
                 newBtn.ButtonClicked += OnNavigationButtonClicked;
-                currentButtons.Add(newBtn);
+                _currentButtons.Add(newBtn);
             }
 
             // The first button is selected by default
-            OnNavigationButtonClicked(currentButtons[0]);
+            OnNavigationButtonClicked(_currentButtons[0]);
         }
 
         private void OnNavigationButtonClicked(NavigationPanelButton currentlyClickedButton)
         {
-            Signals.Get<NavigateToWindowSignal>().Dispatch(currentlyClickedButton.Target);
-            foreach (var button in currentButtons)
+            Signals.SignalBus.Get<NavigateToWindowSignal>().Dispatch(currentlyClickedButton.Target);
+            foreach (var button in _currentButtons)
             {
                 button.SetCurrentNavigationTarget(currentlyClickedButton);
             }
@@ -85,7 +85,7 @@ namespace eggsgd.UiFramework.Examples.ScreenControllers
 
         private void OnExternalNavigation(string screenId)
         {
-            foreach (var button in currentButtons)
+            foreach (var button in _currentButtons)
             {
                 button.SetCurrentNavigationTarget(screenId);
             }
@@ -93,7 +93,7 @@ namespace eggsgd.UiFramework.Examples.ScreenControllers
 
         private void ClearEntries()
         {
-            foreach (var button in currentButtons)
+            foreach (var button in _currentButtons)
             {
                 button.ButtonClicked -= OnNavigationButtonClicked;
                 Destroy(button.gameObject);

@@ -2,3 +2,6 @@
 [submodule "Packages/Unity-uiframework"]
 	path = Packages/Unity-uiframework
 	url = git@github.com:eggs-gd/Unity-uiframework.git
+[submodule "Packages/Unity-signals"]
+	path = Packages/Unity-signals
+	url = ../Unity-signals.git

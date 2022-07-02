@@ -19,14 +19,9 @@ namespace eggsgd.UiFramework.Examples.Widgets
             levelName.text = entry.LevelName;
             for (var i = 0; i < stars.Length; i++)
             {
-                if (i + 1 <= entry.Stars)
-                {
-                    stars[i].color = starOn;
-                }
-                else
-                {
-                    stars[i].color = starOff;
-                }
+                stars[i].color = i + 1 <= entry.Stars
+                    ? starOn
+                    : starOff;
             }
         }
     }

@@ -1,5 +1,5 @@
 ﻿using System;
-using eggsgd.UiFramework.Examples.Utils;
+using eggsgd.Signals;
 using eggsgd.UiFramework.Window;
 using TMPro;
 using UnityEngine;

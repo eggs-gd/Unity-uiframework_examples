@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using DG.Tweening;
 using eggsgd.UiFramework.Examples.Extras;
-using eggsgd.UiFramework.Examples.Utils;
 using eggsgd.UiFramework.Panel;
 using UnityEngine;
 
@@ -18,7 +17,7 @@ namespace eggsgd.UiFramework.Examples.ScreenControllers
         [SerializeField] private float toastPause = 2f;
         [SerializeField] private Ease toastEase = Ease.Linear;
 
-        private bool isToasting;
+        private bool _isToasting;
 
         /// <summary>
         ///     We're making this respond to the same signal as the PlayerWindow does.
@@ -27,17 +26,17 @@ namespace eggsgd.UiFramework.Examples.ScreenControllers
         /// </summary>
         protected override void AddListeners()
         {
-            Signals.Get<PlayerDataUpdatedSignal>().AddListener(OnDataUpdated);
+            Signals.SignalBus.Get<PlayerDataUpdatedSignal>().AddListener(OnDataUpdated);
         }
 
         protected override void RemoveListeners()
         {
-            Signals.Get<PlayerDataUpdatedSignal>().RemoveListener(OnDataUpdated);
+            Signals.SignalBus.Get<PlayerDataUpdatedSignal>().RemoveListener(OnDataUpdated);
         }
 
         private void OnDataUpdated(List<PlayerDataEntry> data)
         {
-            if (isToasting)
+            if (_isToasting)
             {
                 return;
             }
@@ -61,12 +60,12 @@ namespace eggsgd.UiFramework.Examples.ScreenControllers
         {
             yield return null;
 
-            isToasting = true;
+            _isToasting = true;
             var seq = DOTween.Sequence();
             seq.Append(toastRect.DOAnchorPosY(0f, toastDuration).SetEase(toastEase));
             seq.AppendInterval(toastPause);
             seq.Append(toastRect.DOAnchorPosY(toastRect.rect.height, toastDuration).SetEase(toastEase));
-            seq.OnComplete(() => isToasting = false);
+            seq.OnComplete(() => _isToasting = false);
 
             seq.Play();
         }

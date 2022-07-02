@@ -12,10 +12,15 @@ namespace eggsgd.UiFramework.Examples.Widgets
 
         private void Update()
         {
-            transform.Rotate(rotationSpeed * Time.deltaTime, Space.Self);
-            var x = Mathf.Lerp(minMaxPosition.x, minMaxPosition.y, (Mathf.Sin(Time.time * speed) + 1) / 2f);
-            var y = Mathf.Lerp(minMaxPositionY.x, minMaxPositionY.y, (Mathf.Sin(Time.time * speedY) + 1) / 2f);
-            transform.localPosition = new Vector3(x, y, transform.position.z);
+            var trans = transform;
+            trans.Rotate(rotationSpeed * Time.deltaTime, Space.Self);
+
+            var t = (Mathf.Sin(Time.time * speed) + 1) * 0.5f;
+            var x = Mathf.Lerp(minMaxPosition.x, minMaxPosition.y, t);
+
+            t = (Mathf.Sin(Time.time * speedY) + 1) * 0.5f;
+            var y = Mathf.Lerp(minMaxPositionY.x, minMaxPositionY.y, t);
+            trans.localPosition = new Vector3(x, y, trans.position.z);
         }
     }
 }

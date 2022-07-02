@@ -24,13 +24,13 @@ namespace eggsgd.UiFramework.Examples.ScreenControllers
         [SerializeField]
         private UIFollowComponent followTemplate;
 
-        private readonly List<UIFollowComponent> allElements = new();
+        private readonly List<UIFollowComponent> _allElements = new();
 
         private void LateUpdate()
         {
-            for (var i = 0; i < allElements.Count; i++)
+            foreach (var t in _allElements)
             {
-                allElements[i].UpdatePosition(Properties.WorldCamera);
+                t.UpdatePosition(Properties.WorldCamera);
             }
         }
 
@@ -41,12 +41,12 @@ namespace eggsgd.UiFramework.Examples.ScreenControllers
 
         protected override void WhileHiding()
         {
-            foreach (var element in allElements)
+            foreach (var element in _allElements)
             {
                 Destroy(element.gameObject);
             }
 
-            allElements.Clear();
+            _allElements.Clear();
             // This is the kind of thing you *COULD* do, but you usually wouldn't
             // want to - in theory this is UI code, so it shouldn't control external things.
             // This is an example of "with great power comes great responsibility":
@@ -67,12 +67,12 @@ namespace eggsgd.UiFramework.Examples.ScreenControllers
                 followComponent.SetIcon(icon);
             }
 
-            allElements.Add(followComponent);
+            _allElements.Add(followComponent);
         }
 
         private void OnLabelDestroyed(UIFollowComponent destroyedLabel)
         {
-            allElements.Remove(destroyedLabel);
+            _allElements.Remove(destroyedLabel);
         }
     }
 }

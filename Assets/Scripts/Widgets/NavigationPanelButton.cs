@@ -17,9 +17,9 @@ namespace eggsgd.UiFramework.Examples.Widgets
 
         private Button _button;
 
-        private NavigationPanelEntry navigationData;
+        private NavigationPanelEntry _navigationData;
 
-        private Button button
+        private Button Button
         {
             get
             {
@@ -32,36 +32,33 @@ namespace eggsgd.UiFramework.Examples.Widgets
             }
         }
 
-        public string Target => navigationData.TargetScreen;
+        public string Target => _navigationData.TargetScreen;
 
         public event Action<NavigationPanelButton> ButtonClicked;
 
         public void SetData(NavigationPanelEntry target)
         {
-            navigationData = target;
+            _navigationData = target;
             buttonLabel.text = target.ButtonText;
             icon.sprite = target.Sprite;
         }
 
         public void SetCurrentNavigationTarget(NavigationPanelButton selectedButton)
         {
-            button.interactable = selectedButton != this;
+            Button.interactable = selectedButton != this;
         }
 
         public void SetCurrentNavigationTarget(string screenId)
         {
-            if (navigationData != null)
+            if (_navigationData != null)
             {
-                button.interactable = navigationData.TargetScreen == screenId;
+                Button.interactable = _navigationData.TargetScreen == screenId;
             }
         }
 
         public void UI_Click()
         {
-            if (ButtonClicked != null)
-            {
-                ButtonClicked(this);
-            }
+            ButtonClicked?.Invoke(this);
         }
     }
 }

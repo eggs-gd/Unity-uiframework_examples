@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using eggsgd.UiFramework.Examples.Extras;
-using eggsgd.UiFramework.Examples.Utils;
 using eggsgd.UiFramework.Examples.Widgets;
 using eggsgd.UiFramework.Window;
 using UnityEngine;
@@ -26,7 +25,7 @@ namespace eggsgd.UiFramework.Examples.ScreenControllers
         [SerializeField]
         private LevelProgressComponent templateLevelEntry;
 
-        private readonly List<LevelProgressComponent> currentLevels = new();
+        private readonly List<LevelProgressComponent> _currentLevels = new();
 
         /// <summary>
         ///     Here I'm listening to a global signal that is fired by the ScriptableObject
@@ -36,12 +35,12 @@ namespace eggsgd.UiFramework.Examples.ScreenControllers
         /// </summary>
         protected override void AddListeners()
         {
-            Signals.Get<PlayerDataUpdatedSignal>().AddListener(OnDataUpdated);
+            Signals.SignalBus.Get<PlayerDataUpdatedSignal>().AddListener(OnDataUpdated);
         }
 
         protected override void RemoveListeners()
         {
-            Signals.Get<PlayerDataUpdatedSignal>().RemoveListener(OnDataUpdated);
+            Signals.SignalBus.Get<PlayerDataUpdatedSignal>().RemoveListener(OnDataUpdated);
         }
 
         protected override void OnPropertiesSet()
@@ -57,28 +56,28 @@ namespace eggsgd.UiFramework.Examples.ScreenControllers
 
         private void VerifyElementCount(int levelCount)
         {
-            if (currentLevels.Count == levelCount)
+            if (_currentLevels.Count == levelCount)
             {
                 return;
             }
 
-            if (currentLevels.Count < levelCount)
+            if (_currentLevels.Count < levelCount)
             {
-                while (currentLevels.Count < levelCount)
+                while (_currentLevels.Count < levelCount)
                 {
                     var newLevel = Instantiate(templateLevelEntry,
                         templateLevelEntry.transform.parent,
                         false); // Never forget to pass worldPositionStays as false for UI!
                     newLevel.gameObject.SetActive(true);
-                    currentLevels.Add(newLevel);
+                    _currentLevels.Add(newLevel);
                 }
             }
             else
             {
-                while (currentLevels.Count > levelCount)
+                while (_currentLevels.Count > levelCount)
                 {
-                    var levelToRemove = currentLevels[currentLevels.Count - 1];
-                    currentLevels.Remove(levelToRemove);
+                    var levelToRemove = _currentLevels[_currentLevels.Count - 1];
+                    _currentLevels.Remove(levelToRemove);
                     Destroy(levelToRemove.gameObject);
                 }
             }
@@ -86,9 +85,9 @@ namespace eggsgd.UiFramework.Examples.ScreenControllers
 
         private void RefreshElementData(List<PlayerDataEntry> playerLevelProgress)
         {
-            for (var i = 0; i < currentLevels.Count; i++)
+            for (var i = 0; i < _currentLevels.Count; i++)
             {
-                currentLevels[i].SetData(playerLevelProgress[i], i);
+                _currentLevels[i].SetData(playerLevelProgress[i], i);
             }
         }
     }

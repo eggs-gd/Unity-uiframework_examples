@@ -1,6 +1,6 @@
-﻿using eggsgd.UiFramework.Examples.Extras;
+﻿using eggsgd.Signals;
+using eggsgd.UiFramework.Examples.Extras;
 using eggsgd.UiFramework.Examples.ScreenControllers;
-using eggsgd.UiFramework.Examples.Utils;
 using UnityEngine;
 
 namespace eggsgd.UiFramework.Examples
@@ -12,34 +12,34 @@ namespace eggsgd.UiFramework.Examples
         [SerializeField] private Camera cam;
         [SerializeField] private Transform transformToFollow;
 
-        private UIFrame uiFrame;
+        private UIFrame _uiFrame;
 
         private void Awake()
         {
-            uiFrame = defaultUISettings.CreateUIInstance();
-            Signals.Get<StartDemoSignal>().AddListener(OnStartDemo);
-            Signals.Get<NavigateToWindowSignal>().AddListener(OnNavigateToWindow);
-            Signals.Get<ShowConfirmationPopupSignal>().AddListener(OnShowConfirmationPopup);
+            _uiFrame = defaultUISettings.CreateUIInstance();
+            SignalBus.Get<StartDemoSignal>().AddListener(OnStartDemo);
+            SignalBus.Get<NavigateToWindowSignal>().AddListener(OnNavigateToWindow);
+            SignalBus.Get<ShowConfirmationPopupSignal>().AddListener(OnShowConfirmationPopup);
         }
 
         private void Start()
         {
-            uiFrame.OpenWindow(ScreenIds.StartGameWindow);
+            _uiFrame.OpenWindow(ScreenIds.StartGameWindow);
         }
 
         private void OnDestroy()
         {
-            Signals.Get<StartDemoSignal>().RemoveListener(OnStartDemo);
-            Signals.Get<NavigateToWindowSignal>().RemoveListener(OnNavigateToWindow);
-            Signals.Get<ShowConfirmationPopupSignal>().RemoveListener(OnShowConfirmationPopup);
+            SignalBus.Get<StartDemoSignal>().RemoveListener(OnStartDemo);
+            SignalBus.Get<NavigateToWindowSignal>().RemoveListener(OnNavigateToWindow);
+            SignalBus.Get<ShowConfirmationPopupSignal>().RemoveListener(OnShowConfirmationPopup);
         }
 
         private void OnStartDemo()
         {
             // The navigation panel will automatically navigate
             // to the first screen upon opening
-            uiFrame.ShowPanel(ScreenIds.NavigationPanel);
-            uiFrame.ShowPanel(ScreenIds.ToastPanel);
+            _uiFrame.ShowPanel(ScreenIds.NavigationPanel);
+            _uiFrame.ShowPanel(ScreenIds.ToastPanel);
         }
 
         private void OnNavigateToWindow(string windowId)
@@ -48,26 +48,26 @@ namespace eggsgd.UiFramework.Examples
             // automatically, but since we're dealing with navigation and the Window layer
             // has a history stack, this way we can make sure we're not just adding
             // entries to the stack indefinitely
-            uiFrame.CloseCurrentWindow();
+            _uiFrame.CloseCurrentWindow();
 
             switch (windowId)
             {
                 case ScreenIds.PlayerWindow:
-                    uiFrame.OpenWindow(windowId, new PlayerWindowProperties(fakePlayerData.LevelProgress));
+                    _uiFrame.OpenWindow(windowId, new PlayerWindowProperties(fakePlayerData.LevelProgress));
                     break;
                 case ScreenIds.CameraProjectionWindow:
                     transformToFollow.parent.gameObject.SetActive(true);
-                    uiFrame.OpenWindow(windowId, new CameraProjectionWindowProperties(cam, transformToFollow));
+                    _uiFrame.OpenWindow(windowId, new CameraProjectionWindowProperties(cam, transformToFollow));
                     break;
                 default:
-                    uiFrame.OpenWindow(windowId);
+                    _uiFrame.OpenWindow(windowId);
                     break;
             }
         }
 
         private void OnShowConfirmationPopup(ConfirmationPopupProperties popupPayload)
         {
-            uiFrame.OpenWindow(ScreenIds.ConfirmationPopup, popupPayload);
+            _uiFrame.OpenWindow(ScreenIds.ConfirmationPopup, popupPayload);
         }
     }
 }

@@ -263,7 +263,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   priorityLayers:
-    paraLayers: []
+    paraLayers:
+    - priority: 0
+      targetParent: {fileID: 1994109017947380173}
+    - priority: 1
+      targetParent: {fileID: 310472267987625303}
+    - priority: 2
+      targetParent: {fileID: 291234465181832256}
 --- !u!1 &4496382984029757211
 GameObject:
   m_ObjectHideFlags: 0

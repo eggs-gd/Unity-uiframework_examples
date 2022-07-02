@@ -1,4 +1,4 @@
-﻿using eggsgd.UiFramework.Examples.Utils;
+﻿using eggsgd.Signals;
 using eggsgd.UiFramework.Window;
 
 namespace eggsgd.UiFramework.Examples.ScreenControllers
@@ -11,7 +11,7 @@ namespace eggsgd.UiFramework.Examples.ScreenControllers
     {
         public void UI_Start()
         {
-            Signals.Get<StartDemoSignal>().Dispatch();
+            Signals.SignalBus.Get<StartDemoSignal>().Dispatch();
         }
     }
 }

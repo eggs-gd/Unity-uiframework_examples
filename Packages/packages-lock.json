@@ -146,6 +146,12 @@
       },
       "url": "https://packages.unity.com"
     },
+    "eggsgd.signals": {
+      "version": "file:Unity-signals",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "eggsgd.uiframework": {
       "version": "file:Unity-uiframework",
       "depth": 0,

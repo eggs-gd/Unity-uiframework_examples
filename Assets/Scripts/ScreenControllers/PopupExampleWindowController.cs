@@ -1,4 +1,4 @@
-using eggsgd.UiFramework.Examples.Utils;
+using eggsgd.Signals;
 using eggsgd.UiFramework.Window;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,8 +10,8 @@ namespace eggsgd.UiFramework.Examples.ScreenControllers
         [SerializeField]
         private Image exampleImage;
 
-        private int currentPopupExample;
-        private Color originalColor;
+        private int _currentPopupExample;
+        private Color _originalColor;
 
         /// <summary>
         ///     You can use all of Unity's regular functions, as Screens
@@ -21,19 +21,19 @@ namespace eggsgd.UiFramework.Examples.ScreenControllers
         protected override void Awake()
         {
             base.Awake();
-            originalColor = exampleImage.color;
+            _originalColor = exampleImage.color;
         }
 
         public void UI_ShowPopup()
         {
-            Signals.Get<ShowConfirmationPopupSignal>().Dispatch(GetPopupData());
+            SignalBus.Get<ShowConfirmationPopupSignal>().Dispatch(GetPopupData());
         }
 
         private ConfirmationPopupProperties GetPopupData()
         {
             ConfirmationPopupProperties testProps = null;
 
-            switch (currentPopupExample)
+            switch (_currentPopupExample)
             {
                 case 0:
                     testProps = new ConfirmationPopupProperties("Uh-oh!",
@@ -57,10 +57,10 @@ namespace eggsgd.UiFramework.Examples.ScreenControllers
                     break;
             }
 
-            currentPopupExample++;
-            if (currentPopupExample > 3)
+            _currentPopupExample++;
+            if (_currentPopupExample > 3)
             {
-                currentPopupExample = 0;
+                _currentPopupExample = 0;
             }
 
             return testProps;
@@ -68,7 +68,7 @@ namespace eggsgd.UiFramework.Examples.ScreenControllers
 
         private void OnRevertColors()
         {
-            exampleImage.color = originalColor;
+            exampleImage.color = _originalColor;
         }
 
         private void OnRedSelected()

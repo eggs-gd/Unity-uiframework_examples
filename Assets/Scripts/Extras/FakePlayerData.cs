@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using eggsgd.UiFramework.Examples.Utils;
+using eggsgd.Signals;
 using UnityEngine;
 
 namespace eggsgd.UiFramework.Examples.Extras
@@ -36,7 +36,7 @@ namespace eggsgd.UiFramework.Examples.Extras
         /// </summary>
         private void OnValidate()
         {
-            Signals.Get<PlayerDataUpdatedSignal>().Dispatch(levelProgress);
+            Signals.SignalBus.Get<PlayerDataUpdatedSignal>().Dispatch(levelProgress);
         }
     }
 }
